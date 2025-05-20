@@ -1,0 +1,26 @@
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+/usr/share/rvm/rubies/ruby-3.4.4/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2t556j sitelibdir\=./.gem.20250520-3916-2t556j clean
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2t556j sitelibdir\=./.gem.20250520-3916-2t556j
+compiling websocket_mask.c
+websocket_mask.c: In function ‘Init_websocket_mask’:
+websocket_mask.c:26:6: warning: old-style function definition [-Wold-style-definition]
+   26 | void Init_websocket_mask()
+      |      ^~~~~~~~~~~~~~~~~~~
+websocket_mask.c: At top level:
+cc1: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+linking shared-object websocket_mask.so
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2t556j sitelibdir\=./.gem.20250520-3916-2t556j install
+/usr/bin/install -m 0755 websocket_mask.so ./.gem.20250520-3916-2t556j
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2t556j sitelibdir\=./.gem.20250520-3916-2t556j clean

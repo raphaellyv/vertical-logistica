@@ -1,0 +1,18 @@
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/erb-5.0.1/ext/erb/escape
+/usr/share/rvm/rubies/ruby-3.4.4/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-mz2vdz sitelibdir\=./.gem.20250520-3916-mz2vdz clean
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-mz2vdz sitelibdir\=./.gem.20250520-3916-mz2vdz
+compiling escape.c
+linking shared-object erb/escape.so
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-mz2vdz sitelibdir\=./.gem.20250520-3916-mz2vdz install
+/usr/bin/install -m 0755 escape.so ./.gem.20250520-3916-mz2vdz/erb
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-mz2vdz sitelibdir\=./.gem.20250520-3916-mz2vdz clean

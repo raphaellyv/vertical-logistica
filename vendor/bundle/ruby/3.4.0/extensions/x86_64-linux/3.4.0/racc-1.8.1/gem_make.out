@@ -1,0 +1,18 @@
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+/usr/share/rvm/rubies/ruby-3.4.4/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-5mlawj sitelibdir\=./.gem.20250520-3916-5mlawj clean
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-5mlawj sitelibdir\=./.gem.20250520-3916-5mlawj
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-5mlawj sitelibdir\=./.gem.20250520-3916-5mlawj install
+/usr/bin/install -m 0755 cparse.so ./.gem.20250520-3916-5mlawj/racc
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-5mlawj sitelibdir\=./.gem.20250520-3916-5mlawj clean

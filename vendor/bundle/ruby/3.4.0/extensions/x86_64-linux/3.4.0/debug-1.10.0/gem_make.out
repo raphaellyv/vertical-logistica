@@ -1,0 +1,19 @@
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+/usr/share/rvm/rubies/ruby-3.4.4/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2ik6hc sitelibdir\=./.gem.20250520-3916-2ik6hc clean
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2ik6hc sitelibdir\=./.gem.20250520-3916-2ik6hc
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2ik6hc sitelibdir\=./.gem.20250520-3916-2ik6hc install
+/usr/bin/install -m 0755 debug.so ./.gem.20250520-3916-2ik6hc/debug
+
+current directory: /home/raphaelly/vertical-logistica/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250520-3916-2ik6hc sitelibdir\=./.gem.20250520-3916-2ik6hc clean
