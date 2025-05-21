@@ -30,7 +30,8 @@ RSpec.describe Order, type: :model do
 
     context 'uniqueness' do
       it 'requires order_id to be unique' do
-        Order.create(order_id: 1, total: 20.2, date: Date.current)
+        user = User.create!(user_id: 1, name: 'Souza')
+        Order.create!(order_id: 1, total: 20.2, date: Date.current, user:)
         order = Order.new(order_id: 1)
 
         order.valid?
@@ -40,15 +41,18 @@ RSpec.describe Order, type: :model do
     end
 
     context 'comparison' do
-      it 'requires total to be greater than 0' do
+      it 'requires total to be greater than or equal to 0' do
         order1 = Order.new(total: 0)
         order2 = Order.new(total: 0.01)
+        order3 = Order.new(total: -0.01)
 
         order1.valid?
         order2.valid?
+        order3.valid?
 
-        expect(order1.errors.include?(:total)).to be true
+        expect(order1.errors.include?(:total)).to be false
         expect(order2.errors.include?(:total)).to be false
+        expect(order3.errors.include?(:total)).to be true
       end
     end
   end
