@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_21_021738) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_21_024539) do
   create_table "orders", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.decimal "total", null: false
@@ -25,6 +25,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_021738) do
     t.decimal "value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_products_on_product_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,5 +33,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_021738) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
 end
