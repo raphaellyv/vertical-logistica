@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_21_024539) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_21_055029) do
   create_table "orders", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.decimal "total", null: false
     t.date "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["order_id"], name: "index_orders_on_order_id", unique: true
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -25,7 +27,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_024539) do
     t.decimal "value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_products_on_product_id", unique: true
+    t.integer "order_id", null: false
+    t.index ["order_id"], name: "index_products_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +38,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_024539) do
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
+
+  add_foreign_key "orders", "users"
+  add_foreign_key "products", "orders"
 end
