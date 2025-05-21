@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   describe '#valid?' do
-    xcontext 'presence' do
+    context 'presence' do
       it 'requires order_id' do
         order = Order.new(order_id: '')
 
@@ -40,18 +40,15 @@ RSpec.describe Order, type: :model do
     end
 
     context 'comparison' do
-      it 'requires total to be greater than or equal to 0' do
+      it 'requires total to be greater than 0' do
         order1 = Order.new(total: 0)
-        order2 = Order.new(total: 1)
-        order3 = Order.new(total: -1)
+        order2 = Order.new(total: 0.01)
 
         order1.valid?
         order2.valid?
-        order3.valid?
 
-        expect(order1.errors.include?(:total)).to be false
+        expect(order1.errors.include?(:total)).to be true
         expect(order2.errors.include?(:total)).to be false
-        expect(order3.errors.include?(:total)).to be true
       end
     end
   end
