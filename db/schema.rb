@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_21_003404) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_21_005632) do
   create_table "orders", force: :cascade do |t|
-    t.integer "order_id", null: false
+    t.bigint "order_id"
     t.decimal "total", null: false
     t.date "date", null: false
     t.datetime "created_at", null: false
@@ -20,8 +20,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_21_003404) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "name", null: false
+    t.bigint "user_id"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
