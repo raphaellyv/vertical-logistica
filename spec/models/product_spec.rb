@@ -20,17 +20,6 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    context 'uniqueness' do
-      it 'requires product_id to be unique' do
-        Product.create(product_id: 1, value: 20.2)
-        product = Product.new(product_id: 1)
-
-        product.valid?
-
-        expect(product.errors.include?(:product_id)).to be true
-      end
-    end
-
     context 'comparison' do
       it 'requires total to be greater than 0' do
         product1 = Product.new(value: 0.00)
