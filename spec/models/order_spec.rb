@@ -56,4 +56,13 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+
+  describe 'total' do
+    it 'attributes 0 to total on creation' do
+      user = User.create!(user_id: 1, name: 'Joaquim')
+      order = Order.create!(order_id: 1, date: Date.new(2020, 2, 2), user:)
+
+      expect(order.total).to eq 0
+    end
+  end
 end
