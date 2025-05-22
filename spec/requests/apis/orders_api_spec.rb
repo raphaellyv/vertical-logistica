@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Orders API', type: :request do
   context 'GET /api/v1/orders' do
-    it 'succeeds' do
+    it 'lists all orders belonging to each user' do
       user1 = User.create!(user_id: 1, name: 'Zarelli')
       user2 = User.create!(user_id: 2, name: 'Medeiros')
 
@@ -66,10 +66,18 @@ describe 'Orders API', type: :request do
       expect(user_orders2['orders'][0]['products'][1]['product_id']).to eq 122
       expect(user_orders2['orders'][0]['products'][1]['value']).to eq '256.24'
     end
-  end
 
-  context 'GET /api/v1/orders?start_date=2020-12-01&end_date=2021-12-01' do
-    it 'succeeds' do
+    it 'returns empty if there are no orders' do
+      get '/api/v1/orders'
+
+      json_response = JSON.parse(response.body)
+
+      expect(response.status).to eq 200
+      expect(response.content_type).to include('application/json')
+      expect(json_response).to eq []
+    end
+
+    it 'filters orders by start and end date' do
       user1 = User.create!(user_id: 1, name: 'Zarelli')
       user2 = User.create!(user_id: 2, name: 'Medeiros')
 
@@ -132,10 +140,8 @@ describe 'Orders API', type: :request do
       expect(user_orders2['orders'][0]['products'][0]['product_id']).to eq 111
       expect(user_orders2['orders'][0]['products'][0]['value']).to eq '256.24'
     end
-  end
 
-  context 'GET /api/v1/orders?order_id=345' do
-    it 'succeeds' do
+    it 'filters orders by order id' do
       user1 = User.create!(user_id: 1, name: 'Zarelli')
       user2 = User.create!(user_id: 2, name: 'Medeiros')
 

@@ -39,7 +39,7 @@ RSpec.describe Order, type: :model do
       user2 = User.create!(user_id: 2, name: 'Pietro')
 
       order1 = Order.create!(order_id: 1, date: Date.new(2020, 1, 1), user: user1)
-      order2 = Order.create!(order_id: 2, date: Date.new(2020, 2, 2), user: user1)
+      order2 = Order.create!(order_id: 2, date: Date.new(2020, 2, 2), user: user2)
       order3 = Order.create!(order_id: 3, date: Date.new(2020, 3, 3), user: user2)
 
       Product.create!(product_id: 1, value: 2.99, order: order1)
@@ -48,6 +48,66 @@ RSpec.describe Order, type: :model do
       Product.create!(product_id: 3, value: 20.0, order: order3)
 
       expect(order1.calculate_total_value).to eq 7.99
+    end
+  end
+
+  describe '.filter_by_end_date_string' do
+    it 'filters orders by date including the end date' do
+      user1 = User.create!(user_id: 1, name: 'Joaquim')
+      user2 = User.create!(user_id: 2, name: 'Pietro')
+
+      order1 = Order.create!(order_id: 1, date: Date.new(2020, 1, 1), user: user1)
+      order2 = Order.create!(order_id: 2, date: Date.new(2020, 2, 2), user: user2)
+      order3 = Order.create!(order_id: 3, date: Date.new(2020, 3, 3), user: user2)
+
+      filtered_orders = Order.all.filter_by_end_date_string('2020-02-02')
+
+      expect(filtered_orders.length).to eq 2
+      expect(filtered_orders.first).to eq order1
+      expect(filtered_orders.last).to eq order2
+    end
+
+    it 'returns an empty array if no orders are found' do
+      user1 = User.create!(user_id: 1, name: 'Joaquim')
+      user2 = User.create!(user_id: 2, name: 'Pietro')
+
+      order1 = Order.create!(order_id: 1, date: Date.new(2020, 1, 1), user: user1)
+      order2 = Order.create!(order_id: 2, date: Date.new(2020, 2, 2), user: user2)
+      order3 = Order.create!(order_id: 3, date: Date.new(2020, 3, 3), user: user2)
+
+      filtered_orders = Order.all.filter_by_end_date_string('2019-02-02')
+
+      expect(filtered_orders).to eq []
+    end
+  end
+
+  describe '.filter_by_order_id' do
+    it 'filters orders starting with the order_id' do
+      user1 = User.create!(user_id: 1, name: 'Joaquim')
+      user2 = User.create!(user_id: 2, name: 'Pietro')
+
+      order1 = Order.create!(order_id: 123, date: Date.new(2020, 1, 1), user: user1)
+      order2 = Order.create!(order_id: 12, date: Date.new(2020, 2, 2), user: user2)
+      order3 = Order.create!(order_id: 23, date: Date.new(2020, 3, 3), user: user2)
+
+      filtered_orders = Order.all.filter_by_order_id('12')
+
+      expect(filtered_orders.length).to eq 2
+      expect(filtered_orders.first).to eq order1
+      expect(filtered_orders.last).to eq order2
+    end
+
+    it 'returns an empty array if no orders are found' do
+      user1 = User.create!(user_id: 1, name: 'Joaquim')
+      user2 = User.create!(user_id: 2, name: 'Pietro')
+
+      order1 = Order.create!(order_id: 1, date: Date.new(2020, 1, 1), user: user1)
+      order2 = Order.create!(order_id: 2, date: Date.new(2020, 2, 2), user: user2)
+      order3 = Order.create!(order_id: 3, date: Date.new(2020, 3, 3), user: user2)
+
+      filtered_orders = Order.all.filter_by_order_id('12')
+
+      expect(filtered_orders).to eq []
     end
   end
 end

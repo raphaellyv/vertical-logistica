@@ -17,21 +17,19 @@ class Api::V1::OrdersController < ActionController::API
     orders = user.orders
 
     if start_date_params
-      start_date = start_date_params.to_date
-      orders = orders.where('date >= ?', start_date)
+      orders = orders.filter_by_start_date_string(start_date_params)
     end
 
     if end_date_params
-      end_date =end_date_params.to_date
-      orders = orders.where('date <= ?', end_date)
+      orders = orders.filter_by_end_date_string(end_date_params)
     end
 
     if order_id_params
-      orders = orders.where('order_id like ?', order_id_params + '%')
+      orders = orders.filter_by_order_id(order_id_params)
     end
 
     if orders.any?
-      user_json = user.as_json(except: %i[id created_at updated_at])
+      user_json = user.as_json(only: %i[user_id name])
       orders_json = orders.map{ |order| create_order_json(order)}
 
       user_json[:orders] = orders_json
@@ -40,7 +38,7 @@ class Api::V1::OrdersController < ActionController::API
   end
   
   def create_order_json(order)
-    order_json = order.as_json(except: %i[id created_at updated_at user_id])
+    order_json = order.as_json(only: %i[order_id date])
 
     order_json[:total] = order.calculate_total_value
     order_json[:products] = order.products.map{ |product| create_product_json(product) }
@@ -48,6 +46,6 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def create_product_json(product)
-    product.as_json(except: %i[id created_at updated_at order_id])
+    product.as_json(only: %i[product_id value])
   end
 end
