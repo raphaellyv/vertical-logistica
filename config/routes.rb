@@ -10,7 +10,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :orders, only: [:index]
+      resources :orders, only: [:index] do
+        get 'query', on: :collection
+      end
     end
   end
 end
