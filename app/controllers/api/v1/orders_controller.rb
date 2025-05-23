@@ -4,7 +4,7 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def import
-    OrdersImporter.import_file(params[:file])
+    ImportOrdersService.import_from_txt_file(params[:file])
     render status: 201, json: create_orders_list_json
   end
 

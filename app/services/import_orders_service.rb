@@ -1,6 +1,6 @@
-class OrdersImporter
-  def self.import_file(path)
-    File.open(path) do |file|
+class ImportOrdersService
+  def self.import_from_txt_file(file)
+    File.open(file) do |file|
       file.each_line do |line|
         user_id = line[0..9].to_i
         name = line[10..54].lstrip
