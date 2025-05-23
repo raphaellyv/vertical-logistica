@@ -3,18 +3,24 @@ class Api::V1::OrdersController < ActionController::API
     render status: 200, json: create_orders_list_json
   end
 
+  def import
+    OrdersImporter.import_file(params[:file])
+    render status: 201, json: create_orders_list_json
+  end
+
   private
 
   def create_orders_list_json
     start_date_params = params[:start_date]
     end_date_params = params[:end_date]
     order_id_params = params[:order_id]
+    ordered_users = User.all.order(:user_id)
 
-    User.all.map{ |user| create_user_orders_json(user:, start_date_params:, end_date_params:, order_id_params:) }.compact
+    ordered_users.map{ |user| create_user_orders_json(user:, start_date_params:, end_date_params:, order_id_params:) }.compact
   end
   
   def create_user_orders_json(user:, start_date_params:, end_date_params:, order_id_params:)
-    orders = user.orders
+    orders = user.orders.order(:order_id)
 
     if start_date_params
       orders = orders.filter_by_start_date_string(start_date_params)
@@ -39,9 +45,10 @@ class Api::V1::OrdersController < ActionController::API
   
   def create_order_json(order)
     order_json = order.as_json(only: %i[order_id date])
+    ordered_products = order.products.order(:product_id)
 
     order_json[:total] = order.calculate_total_value
-    order_json[:products] = order.products.map{ |product| create_product_json(product) }
+    order_json[:products] = ordered_products.map{ |product| create_product_json(product) }
     order_json
   end
 
