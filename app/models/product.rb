@@ -3,4 +3,5 @@ class Product < ApplicationRecord
 
   validates :product_id, :value, presence: true
   validates :value, comparison: { greater_than: 0 }
+  validates :product_id, uniqueness: { scope: :order_id }
 end

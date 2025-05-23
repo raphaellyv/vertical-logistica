@@ -243,9 +243,9 @@ describe 'Orders API', type: :request do
       first_user_orders = json_response[0]
       last_user_orders = json_response[-1]
 
-      expect(Product.all.length).to eq 19
-      expect(Order.all.length).to eq 19
-      expect(User.all.length).to eq 17
+      expect(Product.count).to eq 19
+      expect(Order.count).to eq 19
+      expect(User.count).to eq 17
 
       expect(response.status).to eq 201
       expect(response.content_type).to include('application/json')

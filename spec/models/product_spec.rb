@@ -32,5 +32,23 @@ RSpec.describe Product, type: :model do
         expect(product2.errors.include?(:value)).to be false
       end
     end
+
+    context 'uniqueness' do
+      it 'requires product_id to be unique for each order' do
+        user = User.create!(user_id: 1, name: 'Aldo')
+        order1 = Order.create!(order_id: 1, date: '2022-03-15'.to_date, user:)
+        order2 = Order.create!(order_id: 2, date: '2023-03-15'.to_date, user:)
+
+        Product.create!(product_id: 1, order: order1, value: 2.33)
+        product1 = Product.new(product_id: 1, order: order1, value: 2.33)
+        product2 = Product.new(product_id: 1, order: order2, value: 2.33)
+
+        product1.valid?
+        product2.valid?
+
+        expect(product1.errors.include?(:product_id)).to be true
+        expect(product2.errors.include?(:product_id)).to be false
+      end
+    end
   end
 end
