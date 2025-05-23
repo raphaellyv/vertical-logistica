@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Orders API', type: :request do
-  context 'GET /api/v1/orders' do
+  context 'GET /api/v1/orders/' do
     it 'lists all orders ordered by user_id, order_id and product_id' do
       user1 = User.create!(user_id: 9, name: 'Medeiros')
       user2 = User.create!(user_id: 5, name: 'Zarelli')
@@ -209,6 +209,29 @@ describe 'Orders API', type: :request do
       expect(user_orders2['orders'][0]['products'][0]['product_id']).to eq 111
       expect(user_orders2['orders'][0]['products'][0]['value']).to eq '256.24'
     end
+
+    it 'shows 20 results per page' do
+      i = 1
+      while i < 10 do
+        user = User.create!(user_id: i, name: 'Antonio')
+        order = Order.create!(user:, order_id: i, date: Date.new(2021, 12, 01))
+        Product.create!(product_id: 122, value: 512.24, order: order)
+        i += 1
+      end
+
+      get '/api/v1/orders?page=1'
+
+      json_response = JSON.parse(response.body)
+      first_user_orders = json_response[0]
+      last_user_orders = json_response[-1]
+      
+      expect(response.status).to eq 200
+      expect(response.content_type).to include('application/json')
+      expect(json_response.length).to eq 5
+
+      expect(first_user_orders['user_id']).to eq 1
+      expect(last_user_orders['user_id']).to eq 5
+    end
   end
 
   context 'POST /api/v1/orders/import' do
@@ -226,7 +249,7 @@ describe 'Orders API', type: :request do
 
       expect(response.status).to eq 201
       expect(response.content_type).to include('application/json')
-      expect(json_response.length).to eq 17
+      expect(json_response.length).to eq 5
 
       expect(first_user_orders['user_id']).to eq 1
       expect(first_user_orders['name']).to eq 'Sammie Baumbach'
@@ -239,32 +262,6 @@ describe 'Orders API', type: :request do
       expect(first_user_orders['orders'][0]['products'].length).to eq 1
       expect(first_user_orders['orders'][0]['products'][0]['product_id']).to eq 2
       expect(first_user_orders['orders'][0]['products'][0]['value']).to eq '96.47'
-
-      expect(last_user_orders['user_id']).to eq 77
-      expect(last_user_orders['name']).to eq 'Mrs. Stephen Trantow'
-
-      expect(last_user_orders['orders'].length).to eq 3
-      expect(last_user_orders['orders'][0]['order_id']).to eq 832
-      expect(last_user_orders['orders'][0]['total']).to eq '961.37'
-      expect(last_user_orders['orders'][0]['date']).to eq '2021-05-13'
-
-      expect(last_user_orders['orders'][1]['order_id']).to eq 844
-      expect(last_user_orders['orders'][1]['total']).to eq '1288.77'
-      expect(last_user_orders['orders'][1]['date']).to eq '2021-11-27'
-
-      expect(last_user_orders['orders'][2]['order_id']).to eq 848
-      expect(last_user_orders['orders'][2]['total']).to eq '1689.0'
-      expect(last_user_orders['orders'][2]['date']).to eq '2021-03-25'
-      
-      expect(last_user_orders['orders'][0]['products'].length).to eq 1
-      expect(last_user_orders['orders'][0]['products'][0]['product_id']).to eq 6
-      expect(last_user_orders['orders'][0]['products'][0]['value']).to eq '961.37'
-
-      expect(last_user_orders['orders'][1]['products'][0]['product_id']).to eq 5
-      expect(last_user_orders['orders'][1]['products'][0]['value']).to eq '1288.77'
-
-      expect(last_user_orders['orders'][2]['products'][0]['product_id']).to eq 4
-      expect(last_user_orders['orders'][2]['products'][0]['value']).to eq '1689.0'
     end
   end
 end

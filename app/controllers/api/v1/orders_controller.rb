@@ -14,7 +14,11 @@ class Api::V1::OrdersController < ActionController::API
     start_date_params = params[:start_date]
     end_date_params = params[:end_date]
     order_id_params = params[:order_id]
-    ordered_users = User.all.order(:user_id)
+    
+    page = params[:page].to_i || 1
+    per_page = 5
+    offset = (page - 1) * per_page
+    ordered_users = User.all.limit(per_page).offset(offset).order(:user_id)
 
     ordered_users.map{ |user| create_user_orders_json(user:, start_date_params:, end_date_params:, order_id_params:) }.compact
   end
