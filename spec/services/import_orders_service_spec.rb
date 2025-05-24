@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ImportOrdersService do
+describe 'ImportOrdersService' do
   context '.import_from_txt_file' do
     it 'imports new orders from file' do
       ImportOrdersService.import_from_txt_file('./spec/support/data_1.txt')
