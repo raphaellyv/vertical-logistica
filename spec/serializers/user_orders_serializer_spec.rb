@@ -46,7 +46,7 @@ describe 'UserOrdersSerializer' do
       end
     end
 
-    context 'filter' do
+    context 'filters' do
       it 'filters orders by start_date including the start_date' do
         user1 = User.create!(user_id: 1, name: 'Zarelli')
         user2 = User.create!(user_id: 2, name: 'Medeiros')

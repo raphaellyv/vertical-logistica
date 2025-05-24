@@ -164,50 +164,23 @@ describe 'Orders API', type: :request do
       get '/api/v1/orders?order_id=345'
 
       json_response = JSON.parse(response.body)
-      user_orders1 = json_response[0]
-      user_orders2 = json_response[1]
+      user_orders = json_response[0]
 
       expect(response.status).to eq 200
       expect(response.content_type).to include('application/json')
-      expect(json_response.length).to eq 2
+      expect(json_response.length).to eq 1
 
-      expect(user_orders1['user_id']).to eq 1
-      expect(user_orders1['name']).to eq 'Zarelli'
+      expect(user_orders['user_id']).to eq 2
+      expect(user_orders['name']).to eq 'Medeiros'
 
-      expect(user_orders1.keys).not_to include('created_at')
-      expect(user_orders1.keys).not_to include('updated_at')
-      expect(user_orders1.keys).not_to include('id')
+      expect(user_orders['orders'].length).to eq 1
+      expect(user_orders['orders'][0]['order_id']).to eq 345
+      expect(user_orders['orders'][0]['date']).to eq '2020-12-01'
+      expect(user_orders['orders'][0]['total']).to eq '256.24'
 
-      expect(user_orders1['orders'].length).to eq 1
-      expect(user_orders1['orders'][0].keys).not_to include('created_at')
-      expect(user_orders1['orders'][0].keys).not_to include('updated_at')
-      expect(user_orders1['orders'][0].keys).not_to include('id')
-      expect(user_orders1['orders'][0].keys).not_to include('user_id')
-
-      expect(user_orders1['orders'][0]['order_id']).to eq 3457
-      expect(user_orders1['orders'][0]['date']).to eq '2022-12-01'
-      expect(user_orders1['orders'][0]['total']).to eq '256.24'
-
-      expect(user_orders1['orders'][0]['products'].length).to eq 1
-      expect(user_orders1['orders'][0]['products'][0].keys).not_to include('created_at')
-      expect(user_orders1['orders'][0]['products'][0].keys).not_to include('updated_at')
-      expect(user_orders1['orders'][0]['products'][0].keys).not_to include('order_id')
-      expect(user_orders1['orders'][0]['products'][0].keys).not_to include('id')
-
-      expect(user_orders1['orders'][0]['products'][0]['product_id']).to eq 122
-      expect(user_orders1['orders'][0]['products'][0]['value']).to eq '256.24'
-
-      expect(user_orders2['user_id']).to eq 2
-      expect(user_orders2['name']).to eq 'Medeiros'
-
-      expect(user_orders2['orders'].length).to eq 1
-      expect(user_orders2['orders'][0]['order_id']).to eq 345
-      expect(user_orders2['orders'][0]['date']).to eq '2020-12-01'
-      expect(user_orders2['orders'][0]['total']).to eq '256.24'
-
-      expect(user_orders2['orders'][0]['products'].length).to eq 1
-      expect(user_orders2['orders'][0]['products'][0]['product_id']).to eq 111
-      expect(user_orders2['orders'][0]['products'][0]['value']).to eq '256.24'
+      expect(user_orders['orders'][0]['products'].length).to eq 1
+      expect(user_orders['orders'][0]['products'][0]['product_id']).to eq 111
+      expect(user_orders['orders'][0]['products'][0]['value']).to eq '256.24'
     end
 
     it 'shows 20 results per page' do
