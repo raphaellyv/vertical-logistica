@@ -1,13 +1,13 @@
 class Api::V1::OrdersController < ActionController::API
   def index
-    users = UsersListSerializer.create_serialized_hash_array(paginated_users)
+    users = OrdersListSerializer.create_serialized_hash_array(paginated_users)
     render status: 200, json: users
   end
 
   def import
     ImportOrdersService.import_from_txt_file(params[:file])
 
-    users = UsersListSerializer.create_serialized_hash_array(paginated_users)
+    users = OrdersListSerializer.create_serialized_hash_array(paginated_users)
     render status: 201, json: users
   end
 
@@ -20,6 +20,17 @@ class Api::V1::OrdersController < ActionController::API
 
     User.order(:user_id).limit(per_page).offset(offset)
   end
+
+  def filter_params
+    params.permit(:start_date)
+  end
+
+  #<ActionController::Parameters {"page" => "1", "from_date" => "2020-10-02",
+# "to_date" => "2020-12-01", "order_id" => "3", "controller" => "api/v1/orders",
+# "action" => "index"} permitted: false>
+
+
+
   # def ordered_serialized_users
   #   User.all.order(:user_id).map{ |user| UserOrdersSerializer.create_serialized_hash(user) }
   # end
