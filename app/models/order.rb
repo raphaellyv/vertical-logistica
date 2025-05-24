@@ -7,19 +7,11 @@ class Order < ApplicationRecord
   validates :order_id, :date, presence: true
   validates :order_id, uniqueness: true
 
+  scope :filter_by_start_date, ->(start_date) { where('date >= ?', start_date) }
+  scope :filter_by_end_date, ->(end_date) { where('date <= ?', end_date) }
+  scope :filter_by_order_id, ->(order_id) { where(order_id: order_id) }
+
   def calculate_total_value
     products.sum(:value)
-  end
-
-  def self.filter_by_start_date_string(start_date_string)
-    self.where('date >= ?', start_date_string.to_date)
-  end
-
-  def self.filter_by_end_date_string(end_date_string)
-    self.where('date <= ?', end_date_string.to_date)
-  end
-
-  def self.filter_by_order_id(order_id)
-    self.where('order_id like ?', order_id + '%')
   end
 end
