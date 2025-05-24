@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe 'UserOrdersSerializer' do
-  context '.to_serialized_hash' do
+  context '.create_serialized_hash' do
     context 'user has orders' do
-      it 'returns the serialized json' do
+      it 'returns a formatted hash of the user orders' do
         user1 = User.create!(user_id: 9, name: 'Medeiros')
         user2 = User.create!(user_id: 5, name: 'Zarelli')
 
@@ -16,7 +16,7 @@ describe 'UserOrdersSerializer' do
         Product.create!(product_id: 111, value: 256.24, order: order2)
         Product.create!(product_id: 122, value: 256.24, order: order3)
 
-        serialized_user_orders = UserOrdersSerializer.to_serialized_hash(user1)
+        serialized_user_orders = UserOrdersSerializer.create_serialized_hash(user1)
 
         expect(serialized_user_orders.keys).to eq ['user_id', 'name', 'orders']
         expect(serialized_user_orders['user_id']).to eq 9
