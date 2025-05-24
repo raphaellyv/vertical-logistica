@@ -110,4 +110,10 @@ RSpec.describe Order, type: :model do
       expect(filtered_orders).to eq []
     end
   end
+
+  describe '.primary_key' do
+    it 'returns order_id as the primary_key' do
+      expect(Order.primary_key).to eq 'order_id'
+    end
+  end
 end

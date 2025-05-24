@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  self.primary_key = :order_id
+
   belongs_to :user
   has_many :products
 

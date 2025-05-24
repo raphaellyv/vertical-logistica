@@ -31,4 +31,10 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.primary_key' do
+    it 'returns user_id as the primary_key' do
+      expect(User.primary_key).to eq 'user_id'
+    end
+  end
 end
