@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'UserOrdersSerializer' do
   context '.create_serialized_hash' do
-    context 'user has orders' do
+    context 'all orders' do
       it 'returns a formatted hash of the user orders' do
         user1 = User.create!(user_id: 9, name: 'Medeiros')
         user2 = User.create!(user_id: 5, name: 'Zarelli')
@@ -16,7 +16,7 @@ describe 'UserOrdersSerializer' do
         Product.create!(product_id: 111, value: 256.24, order: order2)
         Product.create!(product_id: 122, value: 256.24, order: order3)
 
-        serialized_user_orders = UserOrdersSerializer.create_serialized_hash(user1)
+        serialized_user_orders = UserOrdersSerializer.create_serialized_hash(user: user1)
 
         expect(serialized_user_orders.keys).to eq ['user_id', 'name', 'orders']
         expect(serialized_user_orders['user_id']).to eq 9
@@ -43,6 +43,109 @@ describe 'UserOrdersSerializer' do
 
         expect(serialized_user_orders['orders'][1]['products'][1]['product_id']).to eq 122
         expect(serialized_user_orders['orders'][1]['products'][1]['value']).to eq 512.24
+      end
+    end
+
+    context 'filter' do
+      it 'filters orders by start_date including the start_date' do
+        user1 = User.create!(user_id: 1, name: 'Zarelli')
+        user2 = User.create!(user_id: 2, name: 'Medeiros')
+
+        order1 = Order.create!(user: user1, order_id: 1234, date: Date.new(2021, 12, 01))
+        order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
+        order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
+
+        Product.create!(product_id: 111, value: 512.24, order: order1)
+        Product.create!(product_id: 122, value: 512.24, order: order1)
+        Product.create!(product_id: 111, value: 256.24, order: order2)
+        Product.create!(product_id: 122, value: 256.24, order: order3)
+
+        filtered_orders1 = UserOrdersSerializer.create_serialized_hash(user: user1, filters: { start_date: '2021-12-01' })
+        filtered_orders2 = UserOrdersSerializer.create_serialized_hash(user: user2, filters: { start_date: '2021-12-01' })
+
+        expect(filtered_orders1['user_id']).to eq 1
+        expect(filtered_orders1['orders'].length).to eq 2
+        expect(filtered_orders1['orders'][0]['order_id']).to eq 1234
+        expect(filtered_orders1['orders'][1]['order_id']).to eq 3457
+
+        expect(filtered_orders2['user_id']).to eq 2
+        expect(filtered_orders2['orders']).to eq []
+      end
+
+      it 'filters orders by end_date including the end_date' do
+        user1 = User.create!(user_id: 1, name: 'Zarelli')
+        user2 = User.create!(user_id: 2, name: 'Medeiros')
+
+        order1 = Order.create!(user: user1, order_id: 1234, date: Date.new(2021, 12, 01))
+        order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
+        order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
+
+        Product.create!(product_id: 111, value: 512.24, order: order1)
+        Product.create!(product_id: 122, value: 512.24, order: order1)
+        Product.create!(product_id: 111, value: 256.24, order: order2)
+        Product.create!(product_id: 122, value: 256.24, order: order3)
+
+        filtered_orders1 = UserOrdersSerializer.create_serialized_hash(user: user1, filters: { end_date: '2021-12-01' })
+        filtered_orders2 = UserOrdersSerializer.create_serialized_hash(user: user2, filters: { end_date: '2021-12-01' })
+
+        expect(filtered_orders1['user_id']).to eq 1
+        expect(filtered_orders1['orders'].length).to eq 1
+        expect(filtered_orders1['orders'][0]['order_id']).to eq 1234
+        
+        expect(filtered_orders2['user_id']).to eq 2
+        expect(filtered_orders2['orders'].length).to eq 1
+        expect(filtered_orders2['orders'][0]['order_id']).to eq 345
+      end
+
+      it 'filters orders by start and end dates' do
+        user1 = User.create!(user_id: 1, name: 'Zarelli')
+        user2 = User.create!(user_id: 2, name: 'Medeiros')
+
+        order1 = Order.create!(user: user1, order_id: 1234, date: Date.new(2021, 12, 01))
+        order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
+        order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
+
+        Product.create!(product_id: 111, value: 512.24, order: order1)
+        Product.create!(product_id: 122, value: 512.24, order: order1)
+        Product.create!(product_id: 111, value: 256.24, order: order2)
+        Product.create!(product_id: 122, value: 256.24, order: order3)
+
+        filtered_orders1 = UserOrdersSerializer.create_serialized_hash(user: user1, 
+                                                                       filters: { start_date: '2021-10-01', end_date: '2022-12-01' })
+        filtered_orders2 = UserOrdersSerializer.create_serialized_hash(user: user2,
+                                                                       filters: { start_date: '2021-10-01', end_date: '2022-12-01' })
+
+        expect(filtered_orders1['user_id']).to eq 1
+        expect(filtered_orders1['orders'].length).to eq 2
+        expect(filtered_orders1['orders'][0]['order_id']).to eq 1234
+        expect(filtered_orders1['orders'][1]['order_id']).to eq 3457
+        
+        expect(filtered_orders2['user_id']).to eq 2
+        expect(filtered_orders2['orders']).to eq []
+      end
+
+      it 'filters orders by order_id' do
+        user1 = User.create!(user_id: 1, name: 'Zarelli')
+        user2 = User.create!(user_id: 2, name: 'Medeiros')
+
+        order1 = Order.create!(user: user1, order_id: 1234, date: Date.new(2021, 12, 01))
+        order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
+        order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
+
+        Product.create!(product_id: 111, value: 512.24, order: order1)
+        Product.create!(product_id: 122, value: 512.24, order: order1)
+        Product.create!(product_id: 111, value: 256.24, order: order2)
+        Product.create!(product_id: 122, value: 256.24, order: order3)
+
+        filtered_orders1 = UserOrdersSerializer.create_serialized_hash(user: user1, filters: { order_id: 345 })
+        filtered_orders2 = UserOrdersSerializer.create_serialized_hash(user: user2, filters: { order_id: 345 })
+
+        expect(filtered_orders1['user_id']).to eq 1
+        expect(filtered_orders1['orders']).to eq []
+        
+        expect(filtered_orders2['user_id']).to eq 2
+        expect(filtered_orders2['orders'].length).to eq 1
+        expect(filtered_orders2['orders'][0]['order_id']).to eq 345
       end
     end
   end
