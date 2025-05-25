@@ -187,7 +187,7 @@ describe 'Orders API', type: :request do
   context 'POST /api/v1/orders/import' do
     it 'creates users, products and orders from file' do
       post '/api/v1/orders/import',
-        params: { file: fixture_file_upload('./spec/support/data_1.txt', 'multipart/form-data') }
+        params: { file: './spec/support/data_1.txt' }
 
       json_response = JSON.parse(response.body)
       first_user_orders = json_response[0]
