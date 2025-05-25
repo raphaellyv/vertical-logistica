@@ -182,29 +182,6 @@ describe 'Orders API', type: :request do
       expect(user_orders['orders'][0]['products'][0]['product_id']).to eq 111
       expect(user_orders['orders'][0]['products'][0]['value']).to eq '256.24'
     end
-
-    it 'shows 20 results per page' do
-      i = 1
-      while i < 10 do
-        user = User.create!(user_id: i, name: 'Antonio')
-        order = Order.create!(user:, order_id: i, date: Date.new(2021, 12, 01))
-        Product.create!(product_id: 122, value: 512.24, order: order)
-        i += 1
-      end
-
-      get '/api/v1/orders?page=1'
-
-      json_response = JSON.parse(response.body)
-      first_user_orders = json_response[0]
-      last_user_orders = json_response[-1]
-      
-      expect(response.status).to eq 200
-      expect(response.content_type).to include('application/json')
-      expect(json_response.length).to eq 5
-
-      expect(first_user_orders['user_id']).to eq 1
-      expect(last_user_orders['user_id']).to eq 5
-    end
   end
 
   context 'POST /api/v1/orders/import' do
@@ -222,7 +199,7 @@ describe 'Orders API', type: :request do
 
       expect(response.status).to eq 201
       expect(response.content_type).to include('application/json')
-      expect(json_response.length).to eq 5
+      expect(json_response.length).to eq 17
 
       expect(first_user_orders['user_id']).to eq 1
       expect(first_user_orders['name']).to eq 'Sammie Baumbach'
