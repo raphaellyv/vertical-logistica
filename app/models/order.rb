@@ -12,6 +12,6 @@ class Order < ApplicationRecord
   scope :filter_by_order_id, ->(order_id) { where(order_id: order_id) }
 
   def calculate_total_value
-    products.sum(:value)
+    products.sum(:value).round(2)
   end
 end

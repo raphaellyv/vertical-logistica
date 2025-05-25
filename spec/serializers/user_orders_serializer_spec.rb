@@ -11,8 +11,8 @@ describe 'UserOrdersSerializer' do
         order2 = Order.create!(user: user1, order_id: 259, date: Date.new(2020, 12, 01))
         order3 = Order.create!(user: user2, order_id: 155, date: Date.new(2022, 12, 01))
 
-        Product.create!(product_id: 122, value: 512.24, order: order1)
-        Product.create!(product_id: 111, value: 512.24, order: order1)
+        Product.create!(product_id: 122, value: 499.87, order: order1)
+        Product.create!(product_id: 111, value: 590.04, order: order1)
         Product.create!(product_id: 111, value: 256.24, order: order2)
         Product.create!(product_id: 122, value: 256.24, order: order3)
 
@@ -31,7 +31,7 @@ describe 'UserOrdersSerializer' do
 
         expect(serialized_user_orders['orders'][1]['order_id']).to eq 455
         expect(serialized_user_orders['orders'][1]['date']).to eq Date.new(2021, 12, 01)
-        expect(serialized_user_orders['orders'][1]['total']).to eq 1024.48
+        expect(serialized_user_orders['orders'][1]['total']).to eq 1089.91
         expect(serialized_user_orders['orders'][1]['products'].length).to eq 2
 
         expect(serialized_user_orders['orders'][0]['products'][0].keys).to eq ['product_id', 'value']
@@ -39,10 +39,10 @@ describe 'UserOrdersSerializer' do
         expect(serialized_user_orders['orders'][0]['products'][0]['value']).to eq 256.24
 
         expect(serialized_user_orders['orders'][1]['products'][0]['product_id']).to eq 111
-        expect(serialized_user_orders['orders'][1]['products'][0]['value']).to eq 512.24
+        expect(serialized_user_orders['orders'][1]['products'][0]['value']).to eq 590.04
 
         expect(serialized_user_orders['orders'][1]['products'][1]['product_id']).to eq 122
-        expect(serialized_user_orders['orders'][1]['products'][1]['value']).to eq 512.24
+        expect(serialized_user_orders['orders'][1]['products'][1]['value']).to eq 499.87
       end
     end
   end
