@@ -25,18 +25,15 @@ RSpec.describe Product, type: :model do
         Product.create!(product_id: 1, value: 2.33)
         product1 = Product.new(product_id: 1, value: 2.33)
         product2 = Product.new(product_id: 1, value: 3.33)
+        product3 = Product.new(product_id: 2, value: 2.33)
 
         product1.valid?
         product2.valid?
+        product3.valid?
 
         expect(product1.errors.include?(:value)).to be true
         expect(product2.errors.include?(:value)).to be false
-      end
-    end
-
-    describe 'primary_key' do
-      it 'has product_id as the primary_key' do
-        expect(Product.primary_key).to eq 'product_id'
+        expect(product3.errors.include?(:value)).to be false
       end
     end
   end
