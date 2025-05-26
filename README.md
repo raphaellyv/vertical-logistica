@@ -1,5 +1,12 @@
 # API Vertical Logística
-API Rails para processamento de arquivos de pedidos desnormalizados.
+API Rails para processamento de pedidos desnormalizados a partir de um arquivo de texto.
+
+# Índice
+[Stack](#stack) <br>
+[Abordagem](#abordagem) <br>
+[Funcionalidades](#funcionalidades) <br>
+[Como rodar a aplicação](#como-rodar-a-aplicação) <br>
+[Melhorias](#melhorias) <br>
 
 ## Stack
 - Ruby 3.4.4
