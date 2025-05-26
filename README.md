@@ -282,9 +282,14 @@ $ cd vertical-logistica
 $ rspec
 ```
 
-- Instale as dependências e inicie o servidor:
+- Instale as dependências e prepare o banco de dados:
 ```
 $ bin/setup
+```
+
+- Inicie o servidor:
+```
+$ rails s
 ```
 
 - Importe os dados pelo endpoint de importação de pedidos em http://localhost:300/api/v1/orders/import.
