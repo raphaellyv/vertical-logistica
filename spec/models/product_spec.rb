@@ -33,5 +33,11 @@ RSpec.describe Product, type: :model do
         expect(product2.errors.include?(:value)).to be false
       end
     end
+
+    describe 'primary_key' do
+      it 'has product_id as the primary_key' do
+        expect(Product.primary_key).to eq 'product_id'
+      end
+    end
   end
 end
