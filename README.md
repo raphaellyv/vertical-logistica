@@ -1,5 +1,12 @@
 # API Vertical Logística
-API Rails para processamento de arquivos de pedidos desnormalizados.
+API Rails para processamento de pedidos desnormalizados a partir de um arquivo de texto.
+
+# Índice
+[Stack](#stack) <br>
+[Abordagem](#abordagem) <br>
+[Funcionalidades](#funcionalidades) <br>
+[Como rodar a aplicação](#como-rodar-a-aplicação) <br>
+[Melhorias](#melhorias) <br>
 
 ## Stack
 - Ruby 3.4.4
@@ -8,9 +15,13 @@ API Rails para processamento de arquivos de pedidos desnormalizados.
 
 ## Abordagem
 - Cada linha do arquivo de texto padrão a ser importado representa um "item de produto" comprado pelo usuário.
-- Cada "item de produto" é composto por id do usuário, nome do usuário, id do pedido, id do produto, valor do produto, data da compra.
-- Com base nas informações disponíveis, foram criados models para usuário (user), pedido (order) WIP
-  
+- Cada "item de produto" é composto por id do usuário (user_id), nome do usuário (name), id do pedido (order_id), id do produto (product_id), valor do produto (value), data da compra (date).
+- Com base nas informações disponíveis (e considerando que o user_id e o order_id fornecidos são únicos) foram criados models representando o usuário (User), o pedido (Order), o produto (Product) e o item de produto (ProductItem).
+- O model User guarda informações de um usuário (user_id e name) e possui vários pedidos (orders).
+- O model Order guarda as informações de um pedido (order_id e date), pertence a um único usuário (user) e possui vários produtos (products) através de itens de produto (product_items).
+- O model ProductItem é utilizado como intermediário para associar o model Order ao model Product.
+- O model Product guarda as informações de um produto (product_id e value) e considera que o id do produto (product_id) pode se repetir para diferentes valores (values).
+
 ## Funcionalidades
 ### Importação de pedidos a partir de arquivo de texto
  - Importa os dados de pedidos a partir de um arquivo de texto padrão.
