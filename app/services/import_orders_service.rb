@@ -4,6 +4,7 @@ class ImportOrdersService
       users = []
       orders = []
       products = []
+      product_items = []
 
       file.each_line do |line|
         user_id = line[0..9].to_i
@@ -15,12 +16,18 @@ class ImportOrdersService
 
         users << { user_id: user_id, name: name }
         orders << { order_id: order_id, date: date, user_id: user_id }
-        products << { product_id: product_id, value: value, order_id: order_id }
+        products << { product_id: product_id, value: value }
+        product_items << { product_id: product_id, value: value, order_id: order_id }
       end
 
-      User.insert_all(users)
-      Order.insert_all(orders)
-      Product.insert_all(products)
+      User.insert_all(users.uniq)
+      Order.insert_all(orders.uniq)
+      Product.insert_all(products.uniq)
+      
+      product_items.uniq.each do |item|
+        new_product_id = Product.find_by(product_id: item[:product_id], value: item[:value]).id
+        ProductItem.insert({ product_id: new_product_id, order_id: item[:order_id] })
+      end
     end
   end
 end

@@ -11,10 +11,15 @@ describe 'OrdersFilterService' do
       order3 = Order.create!(user: user1, order_id: 1234, date: Date.new(2022, 12, 01))
       order4 = Order.create!(user: user2, order_id: 34, date: Date.new(2021, 12, 01))
 
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
-      Product.create!(product_id: 122, value: 256.24, order: order3)
-      Product.create!(product_id: 122, value: 512.24, order: order4)
+      product1 = Product.create!(product_id: 111, value: 512.24)
+      product2 = Product.create!(product_id: 111, value: 256.24)
+      product3 = Product.create!(product_id: 122, value: 256.24)
+      product4 = Product.create!(product_id: 122, value: 512.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order2)
+      ProductItem.create!(product: product3, order: order3)
+      ProductItem.create!(product: product4, order: order4)
 
       filtered_orders = OrdersFilterService.filter_orders({ start_date: '2021-11-10', end_date: '2023-01-01' })
 
@@ -29,10 +34,15 @@ describe 'OrdersFilterService' do
       order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
       order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
 
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
-      Product.create!(product_id: 122, value: 256.24, order: order3)
+      product1 = Product.create!(product_id: 111, value: 512.24)
+      product2 = Product.create!(product_id: 122, value: 512.24)
+      product3 = Product.create!(product_id: 111, value: 256.24)
+      product4 = Product.create!(product_id: 122, value: 256.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
+      ProductItem.create!(product: product4, order: order3)
 
       filtered_orders = OrdersFilterService.filter_orders({ order_id: 345 })
 
@@ -47,10 +57,15 @@ describe 'OrdersFilterService' do
       order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
       order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
 
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
-      Product.create!(product_id: 122, value: 256.24, order: order3)
+      product1 = Product.create!(product_id: 111, value: 512.24)
+      product2 = Product.create!(product_id: 122, value: 512.24)
+      product3 = Product.create!(product_id: 111, value: 256.24)
+      product4 = Product.create!(product_id: 122, value: 256.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
+      ProductItem.create!(product: product4, order: order3)
 
       filtered_orders = OrdersFilterService.filter_orders({ order_id: 4 })
 

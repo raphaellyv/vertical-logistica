@@ -8,9 +8,13 @@ describe 'OrderSerializer' do
       order1 = Order.create!(user: user1, order_id: 455, date: Date.new(2021, 12, 01))
       order2 = Order.create!(user: user1, order_id: 259, date: Date.new(2020, 12, 01))
 
-      Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
+      product1 = Product.create!(product_id: 122, value: 512.24)
+      product2 = Product.create!(product_id: 111, value: 512.24)
+      product3 = Product.create!(product_id: 111, value: 256.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
 
       serialized_order = OrderSerializer.create_serialized_hash(order1)
 

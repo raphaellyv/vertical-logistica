@@ -10,10 +10,15 @@ describe 'Orders API', type: :request do
       order2 = Order.create!(user: user2, order_id: 259, date: Date.new(2020, 12, 01))
       order3 = Order.create!(user: user2, order_id: 155, date: Date.new(2022, 12, 01))
 
-      Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
-      Product.create!(product_id: 122, value: 256.24, order: order3)
+      product1 = Product.create!(product_id: 122, value: 512.24)
+      product2 = Product.create!(product_id: 111, value: 512.24)
+      product3 = Product.create!(product_id: 111, value: 256.24)
+      product4 = Product.create!(product_id: 122, value: 256.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
+      ProductItem.create!(product: product4, order: order3)
 
       get '/api/v1/orders'
 
@@ -92,10 +97,15 @@ describe 'Orders API', type: :request do
       order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
       order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
 
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
-      Product.create!(product_id: 122, value: 256.24, order: order3)
+      product1 = Product.create!(product_id: 111, value: 512.24)
+      product2 = Product.create!(product_id: 122, value: 512.24)
+      product3 = Product.create!(product_id: 111, value: 256.24)
+      product4 = Product.create!(product_id: 122, value: 256.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
+      ProductItem.create!(product: product4, order: order3)
 
       get '/api/v1/orders?start_date=2020-12-01&end_date=2021-12-01'
 
@@ -156,10 +166,15 @@ describe 'Orders API', type: :request do
       order2 = Order.create!(user: user2, order_id: 345, date: Date.new(2020, 12, 01))
       order3 = Order.create!(user: user1, order_id: 3457, date: Date.new(2022, 12, 01))
 
-      Product.create!(product_id: 111, value: 512.24, order: order1)
-      Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 256.24, order: order2)
-      Product.create!(product_id: 122, value: 256.24, order: order3)
+      product1 = Product.create!(product_id: 111, value: 512.24)
+      product2 = Product.create!(product_id: 122, value: 512.24)
+      product3 = Product.create!(product_id: 111, value: 256.24)
+      product4 = Product.create!(product_id: 122, value: 256.24)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
+      ProductItem.create!(product: product4, order: order3)
 
       get '/api/v1/orders?order_id=345'
 

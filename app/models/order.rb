@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   self.primary_key = :order_id
 
   belongs_to :user
-  has_many :products_items
+  has_many :product_items
   has_many :products, through: :product_items
 
   validates :order_id, :date, presence: true

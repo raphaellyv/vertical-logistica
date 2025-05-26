@@ -42,10 +42,15 @@ RSpec.describe Order, type: :model do
       order2 = Order.create!(order_id: 2, date: Date.new(2020, 2, 2), user: user2)
       order3 = Order.create!(order_id: 3, date: Date.new(2020, 3, 3), user: user2)
 
-      Product.create!(product_id: 1, value: 2.99, order: order1)
-      Product.create!(product_id: 2, value: 5.0, order: order1)
-      Product.create!(product_id: 3, value: 10.0, order: order2)
-      Product.create!(product_id: 3, value: 20.0, order: order3)
+      product1 = Product.create!(product_id: 1, value: 2.99)
+      product2 = Product.create!(product_id: 2, value: 5.0)
+      product3 = Product.create!(product_id: 3, value: 10.0)
+      product4 = Product.create!(product_id: 3, value: 20.0)
+
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
+      ProductItem.create!(product: product3, order: order2)
+      ProductItem.create!(product: product4, order: order3)
 
       expect(order1.calculate_total_value).to eq 7.99
     end

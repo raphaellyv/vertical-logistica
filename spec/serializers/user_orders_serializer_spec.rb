@@ -11,10 +11,15 @@ describe 'UserOrdersSerializer' do
         order2 = Order.create!(user: user1, order_id: 259, date: Date.new(2020, 12, 01))
         order3 = Order.create!(user: user2, order_id: 155, date: Date.new(2022, 12, 01))
 
-        Product.create!(product_id: 122, value: 499.87, order: order1)
-        Product.create!(product_id: 111, value: 590.04, order: order1)
-        Product.create!(product_id: 111, value: 256.24, order: order2)
-        Product.create!(product_id: 122, value: 256.24, order: order3)
+        product1 = Product.create!(product_id: 122, value: 499.87)
+        product2 = Product.create!(product_id: 111, value: 590.04)
+        product3 = Product.create!(product_id: 111, value: 256.24)
+        product4 = Product.create!(product_id: 122, value: 256.24)
+
+        ProductItem.create!(product: product1, order: order1)
+        ProductItem.create!(product: product2, order: order1)
+        ProductItem.create!(product: product3, order: order2)
+        ProductItem.create!(product: product4, order: order3)
 
         serialized_user_orders = UserOrdersSerializer.create_serialized_hash(user: user1, orders: user1.orders)
 

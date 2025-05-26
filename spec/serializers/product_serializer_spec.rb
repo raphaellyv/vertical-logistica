@@ -6,8 +6,11 @@ describe 'ProductSerializer' do
       user1 = User.create!(user_id: 9, name: 'Medeiros')
       order1 = Order.create!(user: user1, order_id: 455, date: Date.new(2021, 12, 01))
 
-      product1 = Product.create!(product_id: 122, value: 512.24, order: order1)
-      Product.create!(product_id: 111, value: 512.24, order: order1)
+      product1 = Product.create!(product_id: 122, value: 512.24)
+      product2 = Product.create!(product_id: 111, value: 512.24)
+      
+      ProductItem.create!(product: product1, order: order1)
+      ProductItem.create!(product: product2, order: order1)
 
       serialized_product = ProductSerializer.create_serialized_hash(product1)
 
